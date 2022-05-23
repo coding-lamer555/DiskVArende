@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище DisksModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="IDClient" />
+    </Key>
+    <Property Name="IDClient" Type="int" Nullable="false" />
+    <Property Name="Fio" Type="nchar" MaxLength="250" />
+    <Property Name="Telephone" Type="float" />
+  </EntityType>
+  <EntityType Name="DisvArende">
+    <Key>
+      <PropertyRef Name="IDArend" />
+    </Key>
+    <Property Name="IDArend" Type="int" Nullable="false" />
+    <Property Name="ID_Disk" Type="int" />
+    <Property Name="IDClient" Type="int" />
+    <Property Name="DataVidachi" Type="datetime" />
+    <Property Name="DataVozvrata" Type="datetime" />
+    <Property Name="ID" Type="int" />
+  </EntityType>
+  <EntityType Name="janrs">
+    <Key>
+      <PropertyRef Name="Janr" />
+    </Key>
+    <Property Name="Janr" Type="nchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KatalogDiskov">
+    <Key>
+      <PropertyRef Name="ID_Disk" />
+    </Key>
+    <Property Name="ID_Disk" Type="int" Nullable="false" />
+    <Property Name="Janr" Type="nchar" MaxLength="50" />
+    <Property Name="NameDisk" Type="nchar" MaxLength="50" />
+    <Property Name="GodVihoda" Type="int" />
+    <Property Name="Razrabotchik" Type="nchar" MaxLength="50" />
+    <Property Name="CenaArend" Type="nchar" MaxLength="50" />
+    <Property Name="Nal" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Role" />
+    </Key>
+    <Property Name="Role" Type="nvarchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="Familia" Type="nvarchar" MaxLength="255" />
+    <Property Name="ima" Type="nvarchar" MaxLength="255" />
+    <Property Name="otchestvo" Type="nvarchar" MaxLength="255" />
+    <Property Name="login" Type="nvarchar" MaxLength="255" />
+    <Property Name="password" Type="nvarchar" MaxLength="255" />
+    <Property Name="Role" Type="nvarchar" MaxLength="255" />
+    <Property Name="ID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_DisvArende_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+    <End Role="DisvArende" Type="Self.DisvArende" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="IDClient" />
+      </Principal>
+      <Dependent Role="DisvArende">
+        <PropertyRef Name="IDClient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DisvArende_KatalogDiskov">
+    <End Role="KatalogDiskov" Type="Self.KatalogDiskov" Multiplicity="0..1" />
+    <End Role="DisvArende" Type="Self.DisvArende" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KatalogDiskov">
+        <PropertyRef Name="ID_Disk" />
+      </Principal>
+      <Dependent Role="DisvArende">
+        <PropertyRef Name="ID_Disk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DisvArende_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="DisvArende" Type="Self.DisvArende" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DisvArende">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Role" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Role" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище DisksModelContainer">
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DisvArende" EntityType="Self.DisvArende" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="janrs" EntityType="Self.janrs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KatalogDiskov" EntityType="Self.KatalogDiskov" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DisvArende_Client" Association="Self.FK_DisvArende_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="DisvArende" EntitySet="DisvArende" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DisvArende_KatalogDiskov" Association="Self.FK_DisvArende_KatalogDiskov">
+      <End Role="KatalogDiskov" EntitySet="KatalogDiskov" />
+      <End Role="DisvArende" EntitySet="DisvArende" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DisvArende_User" Association="Self.FK_DisvArende_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="DisvArende" EntitySet="DisvArende" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Roles" Association="Self.FK_User_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DisksModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="IDClient" />
+    </Key>
+    <Property Name="IDClient" Type="Int32" Nullable="false" />
+    <Property Name="Fio" Type="String" MaxLength="250" FixedLength="true" Unicode="true" />
+    <Property Name="Telephone" Type="Double" />
+    <NavigationProperty Name="DisvArende" Relationship="Self.FK_DisvArende_Client" FromRole="Client" ToRole="DisvArende" />
+  </EntityType>
+  <EntityType Name="DisvArende">
+    <Key>
+      <PropertyRef Name="IDArend" />
+    </Key>
+    <Property Name="IDArend" Type="Int32" Nullable="false" />
+    <Property Name="ID_Disk" Type="Int32" />
+    <Property Name="IDClient" Type="Int32" />
+    <Property Name="DataVidachi" Type="DateTime" Precision="3" />
+    <Property Name="DataVozvrata" Type="DateTime" Precision="3" />
+    <Property Name="ID" Type="Int32" />
+    <NavigationProperty Name="Client" Relationship="Self.FK_DisvArende_Client" FromRole="DisvArende" ToRole="Client" />
+    <NavigationProperty Name="KatalogDiskov" Relationship="Self.FK_DisvArende_KatalogDiskov" FromRole="DisvArende" ToRole="KatalogDiskov" />
+    <NavigationProperty Name="User" Relationship="Self.FK_DisvArende_User" FromRole="DisvArende" ToRole="User" />
+  </EntityType>
+  <EntityType Name="janrs">
+    <Key>
+      <PropertyRef Name="Janr" />
+    </Key>
+    <Property Name="Janr" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KatalogDiskov">
+    <Key>
+      <PropertyRef Name="ID_Disk" />
+    </Key>
+    <Property Name="ID_Disk" Type="Int32" Nullable="false" />
+    <Property Name="Janr" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="NameDisk" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="GodVihoda" Type="Int32" />
+    <Property Name="Razrabotchik" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="CenaArend" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Nal" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="DisvArende" Relationship="Self.FK_DisvArende_KatalogDiskov" FromRole="KatalogDiskov" ToRole="DisvArende" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Role" />
+    </Key>
+    <Property Name="Role" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_User_Roles" FromRole="Roles" ToRole="User" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="Familia" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ima" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="otchestvo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="login" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Role" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DisvArende" Relationship="Self.FK_DisvArende_User" FromRole="User" ToRole="DisvArende" />
+    <NavigationProperty Name="Roles" Relationship="Self.FK_User_Roles" FromRole="User" ToRole="Roles" />
+  </EntityType>
+  <Association Name="FK_DisvArende_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+    <End Role="DisvArende" Type="Self.DisvArende" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="IDClient" />
+      </Principal>
+      <Dependent Role="DisvArende">
+        <PropertyRef Name="IDClient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DisvArende_KatalogDiskov">
+    <End Role="KatalogDiskov" Type="Self.KatalogDiskov" Multiplicity="0..1" />
+    <End Role="DisvArende" Type="Self.DisvArende" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KatalogDiskov">
+        <PropertyRef Name="ID_Disk" />
+      </Principal>
+      <Dependent Role="DisvArende">
+        <PropertyRef Name="ID_Disk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DisvArende_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="DisvArende" Type="Self.DisvArende" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DisvArende">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Role" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Role" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DisksEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Client" EntityType="Self.Client" />
+    <EntitySet Name="DisvArende" EntityType="Self.DisvArende" />
+    <EntitySet Name="janrs" EntityType="Self.janrs" />
+    <EntitySet Name="KatalogDiskov" EntityType="Self.KatalogDiskov" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="User" EntityType="Self.User" />
+    <AssociationSet Name="FK_DisvArende_Client" Association="Self.FK_DisvArende_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="DisvArende" EntitySet="DisvArende" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DisvArende_KatalogDiskov" Association="Self.FK_DisvArende_KatalogDiskov">
+      <End Role="KatalogDiskov" EntitySet="KatalogDiskov" />
+      <End Role="DisvArende" EntitySet="DisvArende" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DisvArende_User" Association="Self.FK_DisvArende_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="DisvArende" EntitySet="DisvArende" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Roles" Association="Self.FK_User_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,17 @@
+﻿<Window x:Class="DiskVArende.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiskVArende"
+        mc:Ignorable="d"
+        Title="Авторизация Частная аренда" MinHeight="350" MinWidth="650" Height="400" Width="700" MaxHeight="2000" MaxWidth="2000" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="442*"/>
+        </Grid.ColumnDefinitions>
+        <Image x:Name="IMG_Logo" Source="Resources/Лого.JPG" Margin="10,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"></Image>
+        <Frame x:Name="mainFrame" Grid.Column="1"></Frame>
+    </Grid>
+</Window>

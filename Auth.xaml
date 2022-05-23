@@ -1,0 +1,39 @@
+﻿<Page x:Class="DiskVArende.Auth"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DiskVArende"
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="440"
+      Title="Auth">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="144"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="STmain" Margin="10,0,0,0">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="24"></Setter>
+                    <Setter Property="FontFamily" Value="Times New Roman"></Setter>
+                    <Setter Property="Width" Value="90"></Setter>
+                    <Setter Property="FontWeight" Value="Black"></Setter>
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel x:Name="st1" Orientation="Horizontal" Margin="0,60,0,10">
+                <TextBlock x:Name="T_Block_login" Text="Логин"></TextBlock>
+                <TextBox x:Name="TB_Logg" Width="250"></TextBox>
+            </StackPanel>
+            <StackPanel x:Name="st2" Orientation="Horizontal">
+                <TextBlock x:Name="T_Block_pass" Text="Пароль"></TextBlock>
+                <PasswordBox x:Name="TB_Pass" Width="250"></PasswordBox>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel x:Name="STMain2" Grid.Row="1">
+            <Button x:Name="BTN_Vihod" Content="Войти" Width="120" Margin="160,0,0,0" HorizontalAlignment="Left" Click="BTN_Vihod_Click"></Button>
+            <Button x:Name="BTN_Katalog" Content="Каталог дисков" Width="200" Margin="120,10,0,0"  HorizontalAlignment="Left"></Button>
+        </StackPanel>
+    </Grid>
+</Page>
